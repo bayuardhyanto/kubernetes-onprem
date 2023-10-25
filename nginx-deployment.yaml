@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  selector:
+    matchLabels:
+      app: web
+  replicas: 3 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+        image: stenote/nginx-hostname
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: "50Mi"
+            cpu: "70m"
+          requests:
+            memory: "10Mi"
+            cpu: "25m"
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: web
+  namespace: default
+spec:
+  maxReplicas: 3
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+#ReplicationController
+    name: web
