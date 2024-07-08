@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: web
-  replicas: 3 # tells deployment to run 2 pods matching the template
+  replicas: 10 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
@@ -31,7 +31,7 @@ metadata:
   name: web
   namespace: default
 spec:
-  maxReplicas: 3
+  maxReplicas: 15
   minReplicas: 1
   scaleTargetRef:
     apiVersion: apps/v1
